@@ -77,14 +77,14 @@ public class StreamingJob {
 		});
 
 
-
+		// define a simple pattern and condition to detecto from data stream
 		Pattern<Sensor,?> highTempPattern = Pattern.<Sensor>begin("first").where(new SimpleCondition<Sensor>() {
 			@Override
 			public boolean filter(Sensor sensor) throws Exception {
 				return sensor.getTemperature() > 60;
 			}
 		});
-
+		// get resulted data stream from input data stream based on the defined CEP pattern
 		DataStream<Sensor> result = CEP.pattern(inputStream.keyBy(new KeySelector<Sensor, Integer>() {
 			@Override
 			public Integer getKey(Sensor sensor) throws Exception {
